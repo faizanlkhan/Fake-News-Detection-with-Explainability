@@ -1,88 +1,110 @@
-# Fake News Detection with Explainability 📰
+# Fake News Detection with Feature-Based Interpretability 📰
 
-A machine learning project to classify news articles as real or fake using Natural Language Processing (NLP) techniques, along with basic model explainability.
+A machine learning approach to classify news articles as real or fake using NLP techniques, with emphasis on model behavior analysis and feature-level interpretability.
 
 ---
 
 ## 🚀 Overview
 
-This project uses:
-- Text preprocessing
-- TF-IDF vectorization
-- Logistic Regression classifier
+This project builds an end-to-end NLP pipeline to classify news articles and analyze how classical models make decisions.
 
-It also includes explainability by analyzing which words contribute most to predictions.
+Key focus:
+- Text-based classification using TF-IDF
+- Comparison of multiple models
+- Interpreting predictions through feature importance
 
 ---
 
 ## 📊 Dataset
 
-- Combined dataset of real and fake news articles
-- Total samples: ~44,000
-- Balanced classes (Real vs Fake)
+- ~44,000 news articles (Real + Fake)
+- Balanced class distribution
+- Includes structured sources (e.g., Reuters)
 
 ---
 
-## ⚙️ Pipeline
+## ⚙️ Methodology
 
-1. Data loading and labeling
-2. Text cleaning (removing URLs, punctuation, etc.)
-3. Train-test split (80-20)
-4. TF-IDF feature extraction (max_features=5000)
-5. Logistic Regression model training
-6. Evaluation using:
+1. Data preprocessing (cleaning, normalization)
+2. TF-IDF vectorization (max_features = 5000)
+3. Train-test split (80/20)
+4. Model training:
+   - Logistic Regression
+   - Multinomial Naive Bayes (baseline)
+5. Evaluation:
    - Accuracy
-   - Classification report
-   - Confusion matrix
+   - Precision, Recall, F1-score
+   - Confusion Matrix
 
 ---
 
-## 📈 Results
+## 📈 Model Comparison
 
-- Accuracy: ~98.7%
-- Strong performance on structured news data
+| Model                  | Accuracy |
+|-----------------------|---------|
+| Logistic Regression   | ~98.7%  |
+| Naive Bayes           | ~96–97% |
+
+👉 Logistic Regression performs better due to its ability to handle feature weighting more effectively.
 
 ---
 
-## 🔍 Explainability
+## 📊 Visualization
 
-Model interpretability is achieved by analyzing feature importance:
+### Confusion Matrix (Logistic Regression)
+![Confusion Matrix](images/confusion_matrix.png)
 
-- Words like "reuters", "said", "washington" strongly indicate real news  
-- Words like "clickbait-style phrases" tend to indicate fake news  
+### Model Comparison
+![Model Comparison](images/model_comparison.png)
 
-This shows model identifies words such as "said", "government", and location names as indicators of real news, reflecting formal reporting style.
+---
 
-On the other hand, words associated with sensational or exaggerated language contribute to fake news predictions.
+## 🔍 Interpretability
 
-This suggests that the model relies more on stylistic and structural patterns rather than factual correctness.
+Feature-level analysis was used to understand model behavior:
+
+- Real news is associated with:
+  - “reuters”, “said”, “washington”
+- Fake news shows:
+  - Informal and exaggerated language patterns
+
+👉 The model relies heavily on stylistic and structural cues, not factual correctness.
 
 ---
 
 ## ⚠️ Limitations
 
-- Does NOT verify factual correctness
-- Relies heavily on writing style and patterns
-- Performs poorly on:
-  - Short text
-  - Out-of-distribution inputs
-  - Neutral factual statements without context
+- Does not verify factual truth
+- Sensitive to dataset-specific patterns (e.g., Reuters bias)
+- Weak on short or context-limited inputs
+- Learns writing style more than semantic truth
+
+---
+
+## 💡 Key Insight
+
+The model achieves high accuracy (~98%), but this is largely driven by learning source-specific and stylistic patterns, not actual fact verification.
+
+This highlights an important limitation of classical NLP approaches in misinformation detection.
 
 ---
 
 ## 🛠 Tech Stack
 
 - Python
-- Pandas
+- Pandas, NumPy
 - Scikit-learn
-- NLP (TF-IDF)
+- TF-IDF (NLP)
 
 ---
 
 ## 📂 Project Structure
-
 ```
 fake-news-detection-with-explainability/
+│
+├── images/
+│   └── confusion_matrix.png
+│   └── model_comparison.png
 │
 ├── notebook/
 │   └── fake_news_detection.ipynb
@@ -96,33 +118,21 @@ fake-news-detection-with-explainability/
 └── README.md
 ```
 
-
-
 ## ▶️ How to Run
 
 1. Clone the repository
-
 2. Install dependencies:
-   ```
+```
    pip install -r requirements.txt
-   ```
-
+```
 3. Open the notebook:
    notebook/fake_news_detection.ipynb
-
 4. Run all cells
 
+## 📌 Future Work
 
-## 💡 Key Insight
-
-This project highlights that machine learning models often learn patterns in writing style rather than verifying factual correctness.
-
-For example, structured sources like "Reuters" strongly influence predictions, showing the model relies on textual patterns instead of real-world truth.
-
-
-## 📌 Future Improvements
-
-- Use deep learning models (LSTM, BERT)
-- Add real-world fact-checking integration
-- Improve performance on short and unseen text
-- Reduce reliance on dataset-specific patterns
+- Explore additional baseline models (e.g., SVM, Random Forest) for broader comparison  
+- Improve robustness on short and context-limited news samples  
+- Reduce dataset-specific bias (e.g., source-related patterns like Reuters)  
+- Incorporate contextual embeddings to better capture semantic meaning  
+- Evaluate model performance on more diverse and real-world datasets
